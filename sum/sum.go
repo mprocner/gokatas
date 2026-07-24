@@ -2,7 +2,7 @@
 // technique. For more see
 // https://github.com/jreisinger/docs/blob/master/notes/cs/divide-and-conquer.md
 //
-//	go test sum/*
+//	go test -bench=.
 //
 // Level: intermediate
 // Topics: algorithms, testing
