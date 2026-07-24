@@ -1,5 +1,6 @@
 // Package sum sums a list of integers using loop and divide-and-conquer
-// technique. See reisinge.net/notes/cs/divide-and-conquer for more.
+// technique. For more see
+// https://github.com/jreisinger/docs/blob/master/notes/cs/divide-and-conquer.md
 //
 //	go test sum/*
 //
