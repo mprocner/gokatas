@@ -19,7 +19,7 @@ func TestParseKata(t *testing.T) {
 			t.Errorf("test failed: %v", err)
 		}
 
-		wantLevel := "beginner"
+		wantLevel := LevelBeginner
 		if level != wantLevel {
 			t.Errorf("got %s, want %s", level, wantLevel)
 		}

@@ -21,12 +21,48 @@ import (
 //   - 2022-09-10: areader
 const KatasFile = "katas.md"
 
+// Level indicates kata difficulty.
+type Level int
+
+const (
+	LevelUnknown Level = iota
+	LevelBeginner
+	LevelIntermediate
+	LevelAdvanced
+)
+
+func (l Level) String() string {
+	switch l {
+	case LevelBeginner:
+		return "beginner"
+	case LevelIntermediate:
+		return "intermediate"
+	case LevelAdvanced:
+		return "advanced"
+	default:
+		return "unknown"
+	}
+}
+
+func parseLevel(s string) Level {
+	switch strings.ToLower(strings.TrimSpace(s)) {
+	case "beginner":
+		return LevelBeginner
+	case "intermediate":
+		return LevelIntermediate
+	case "advanced":
+		return LevelAdvanced
+	default:
+		return LevelUnknown
+	}
+}
+
 // Kata represents a programming kata.
 type Kata struct {
 	Name      string
 	LastDone  time.Time
 	TimesDone int
-	Level     string
+	Level     Level
 	Topics    []string
 }
 
@@ -172,7 +208,7 @@ func getDone() ([]Kata, error) {
 	return ks, nil
 }
 
-func parseKata(name string) (level string, topics []string, err error) {
+func parseKata(name string) (level Level, topics []string, err error) {
 	fn := func(path string, d fs.DirEntry, err error) error {
 		if filepath.Ext(path) == ".go" {
 			f, err := os.Open(path)
@@ -194,10 +230,10 @@ func parseKata(name string) (level string, topics []string, err error) {
 				}
 				if inCommentBlock || strings.HasPrefix(line, "//") {
 					if levelRE.MatchString(line) {
-						level = cutLevel(s.Text())
+						level = cutLevel(line)
 					}
 					if topicsRE.MatchString(line) {
-						topics = append(topics, cutTopics(s.Text())...)
+						topics = append(topics, cutTopics(line)...)
 					}
 				}
 			}
@@ -209,18 +245,18 @@ func parseKata(name string) (level string, topics []string, err error) {
 	}
 	absPath, err := filepath.Abs(name)
 	if err != nil {
-		return "", nil, err
+		return LevelUnknown, nil, err
 	}
 	err = filepath.WalkDir(absPath, fn)
 	if err != nil {
-		return "", nil, err
+		return LevelUnknown, nil, err
 	}
 	return level, topics, err
 }
 
-func cutLevel(line string) string {
-	_, level, _ := strings.Cut(line, ":")
-	return strings.TrimSpace(level)
+func cutLevel(line string) Level {
+	_, rawLevel, _ := strings.Cut(line, ":")
+	return parseLevel(rawLevel)
 }
 
 func cutTopics(line string) []string {
@@ -299,7 +335,7 @@ func sortKatas(katas []Kata, column *int) {
 			}
 		case 4:
 			if x.Level != y.Level {
-				return x.Level > y.Level
+				return x.Level < y.Level
 			}
 		default:
 			log.Fatalf("can't sort by column %d", *column)
