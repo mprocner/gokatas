@@ -1,6 +1,3 @@
-> [!IMPORTANT]
-> Here's a cleaner and simpler version: https://github.com/gokatas/gokatas
-
 # Go katas
 
 Katas (形) are practiced in martial arts as a way to internalize and perfect the
@@ -14,7 +11,7 @@ Use `git diff` to see how you are doing. There's a command to show the katas
 with some info and your progress:
 
 ```
-$ go run ./cmd/gokatas -c 2
+$ go run ./cmd/gokatas -c 2 # use -h for help
 Kata              Last done    Done  Level     Topics
 ----              ---------    ----  -----     ------
 boring/boring     0 days ago     1x  beginner  concurrency, design

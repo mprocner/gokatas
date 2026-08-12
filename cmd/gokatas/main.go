@@ -5,16 +5,17 @@ import (
 	"flag"
 	"log"
 	"os"
+	"path"
 )
 
-var sortByColumn = flag.Int("c", 1, "sort katas by `column`")
-var gokatasRepo = flag.String("r", ".", "path to gokatas repository")
-
 func main() {
-	flag.Parse()
-
-	log.SetPrefix("gokatas: ")
+	log.SetPrefix(path.Base(os.Args[0]) + ": ")
 	log.SetFlags(0)
+
+	flag.Usage = func() { flag.PrintDefaults() }
+	sortByColumn := flag.Int("c", 1, "sort katas by `column`")
+	gokatasRepo := flag.String("r", ".", "path to gokatas repository")
+	flag.Parse()
 
 	if *gokatasRepo != "." {
 		if err := os.Chdir(*gokatasRepo); err != nil {
