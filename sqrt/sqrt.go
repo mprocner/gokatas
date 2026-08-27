@@ -3,11 +3,18 @@
 //
 // Level: beginner
 // Topics: algorithms, math
-package sqrt
+package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 const delta = 1e-15
+
+func main() {
+	fmt.Println(sqrt(3))
+}
 
 func sqrt(x float64) float64 {
 	z := 1.0 // initial guess
