@@ -17,8 +17,9 @@ const (
 	South
 	East
 	West
+	NorthEast
 )
 
 func (d Direction) String() string {
-	return [...]string{"North", "South", "East", "West"}[d]
+	return [...]string{"North", "South", "East", "West", "NorthEast"}[d]
 }
