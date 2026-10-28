@@ -18,6 +18,10 @@ func main() {
 		fmt.Println(<-ann)
 		fmt.Println(<-joe)
 	}
+	mysaychannel := mysay("message")
+	for i := 0; i < 40; i++ {
+		fmt.Println(<-mysaychannel)
+	}
 }
 
 func say(msg string) <-chan string {
@@ -29,4 +33,14 @@ func say(msg string) <-chan string {
 		}
 	}()
 	return c
+}
+
+func mysay(message string) <-chan string {
+	channel := make(chan string, 10)
+	go func() {
+		for i := 0; ; i++ {
+			channel <- fmt.Sprintf("%s, %d, %d", message, i, rand.Intn(20))
+		}
+	}()
+	return channel
 }

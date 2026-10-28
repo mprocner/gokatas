@@ -5,3 +5,4 @@
 * 2026-09-09: boring/boring
 * 2026-09-17: boring/channel
 * 2026-10-27: boring/generator
+* 2026-10-28: boring/lockstep
