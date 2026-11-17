@@ -7,3 +7,4 @@
 * 2026-10-27: boring/generator
 * 2026-10-28: boring/lockstep
 * 2026-11-04: areader
+* 2026-11-17: bytecounter
